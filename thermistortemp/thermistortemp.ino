@@ -1,9 +1,9 @@
 // which analog pin to connect
 #define THERMISTORPIN A0         
 // resistance at 25 degrees C
-#define THERMISTORNOMINAL 10000      
+#define THERMISTORNOMINAL 68000      
 // temp. for nominal resistance (almost always 25 C)
-#define TEMPERATURENOMINAL 25   
+#define TEMPERATURENOMINAL 31   
 // how many samples to take and average, more takes longer
 // but is more 'smooth'
 #define NUMSAMPLES 5

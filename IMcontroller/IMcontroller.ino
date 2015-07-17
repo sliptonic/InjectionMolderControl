@@ -14,6 +14,23 @@
 const byte s7sAddress = 0x71;
 
 
+//Thermistor setup
+// which analog pin to connect
+#define THERMISTORPIN A0         
+// resistance at 25 degrees C
+#define THERMISTORNOMINAL 68000      
+// temp. for nominal resistance (almost always 25 C)
+#define TEMPERATURENOMINAL 31   
+// how many samples to take and average, more takes longer
+// but is more 'smooth'
+#define NUMSAMPLES 5
+// The beta coefficient of the thermistor (usually 3000-4000)
+#define BCOEFFICIENT 3950
+// the value of the 'other' resistor
+#define SERIESRESISTOR 10000    
+ 
+int samples[NUMSAMPLES];
+
 //Here's some setup for checking the buttons
 #define DEBOUNCE 10  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
 
@@ -90,7 +107,7 @@ void loop()
     delay(1500);
   } 
 
-  
+  actual_temp = gettemp();
   sprintf(tempString, "A%03d", actual_temp);
   s7sSendStringI2C(tempString);
 
@@ -187,4 +204,36 @@ void check_switches()
     previousstate[index] = currentstate[index];   
   }
 
+}
+
+int gettemp() {
+  uint8_t i;
+  float average;
+ 
+  // take N samples in a row, with a slight delay
+  for (i=0; i< NUMSAMPLES; i++) {
+   samples[i] = analogRead(THERMISTORPIN);
+   delay(10);
+  }
+ 
+  // average all the samples out
+  average = 0;
+  for (i=0; i< NUMSAMPLES; i++) {
+     average += samples[i];
+  }
+  average /= NUMSAMPLES;
+ 
+    // convert the value to resistance
+  average = 1023 / average - 1;
+  average = SERIESRESISTOR / average;
+  
+  float steinhart;
+  steinhart = average / THERMISTORNOMINAL;     // (R/Ro)
+  steinhart = log(steinhart);                  // ln(R/Ro)
+  steinhart /= BCOEFFICIENT;                   // 1/B * ln(R/Ro)
+  steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
+  steinhart = 1.0 / steinhart;                 // Invert
+  steinhart -= 273.15;                         // convert to C
+ 
+  return steinhart;
 }
