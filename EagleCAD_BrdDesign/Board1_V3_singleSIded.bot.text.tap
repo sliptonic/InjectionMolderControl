@@ -1,0 +1,34 @@
+N00340 (.../Eagle_PCB_gcode/pcb-gcode-3/pcb-gcode.ulp)
+N00350 (Copyright 2005 - 2012 by John Johnson)
+N00360 (See readme.txt for licensing terms.)
+N00370 (This file generated from the board:)
+N00380 (.../EagleCAD_BrdDesign/Board1_V3_singleSIded.brd)
+N00390 (Current profile is .../pcb-gcode-3/profiles/generic.pp  )
+N00400 (This file generated 8/26/15 4:57 PM)
+N00410 (Settings from pcb-machine.h)
+N00420 (spindle on time = 3.0000)
+N00430 (spindle speed = 25000.0000)
+N00440 (text depth = -0.1270)
+N00450 (tool change at 0.0000 0.0000 25.4000 )
+N00460 (feed rate xy = F254.00 )
+N00470 (feed rate z  = F254.00 )
+N00480 (Z Axis Settings)
+N00490 (  High     Up        Down     Drill)
+N00500 (12.7000 	2.5400 	-0.1778 	-0.8128 )
+N00510 (Settings from pcb-defaults.h)
+N00520 (isolate min = 0.0100)
+N00530 (isolate max = 0.0500)
+N00540 (isolate step = 0.0500)
+N00550 (Generated bottom outlines, )
+N00560 (Unit of measure: mm)
+N00570 (Metric Mode)
+N00580 G21
+N00590 (Absolute Coordinates)
+N00600 G90
+N00610 S25000
+N00620 G00 Z12.7000 
+N00630 G00 X0.0000 Y0.0000 
+N00640 M03
+N00650 G04 P3.000000
+N00660 M05
+N00670 M02
