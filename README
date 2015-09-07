@@ -1,17 +1,30 @@
-//////////////////////////////////////
-/// Serial 7-Segment Display /////////
-//////////////////////////////////////
-/// Arduino Firmware and Test Code ///
-//////////////////////////////////////
+Injection molder digital control 
+Columbia Gadget Works (2015)
 
-These folders should live in your Arduino Sketchbook.
+This is a control system for a hobby injection molder as described in "Secrets of Building a Plastic Injection Molding Machine" by Vincent R. Gingery.
 
-Serial 7-Segment Display: This folder contains the Serial 7-Segment Displays firmware and test/example Arduino code.
+In the book, he uses a simple thermostat to control a heater element.  We wanted to try something slightly more sophisticated so we built this.
 
-hardware/Serial7Seg: This adds a "Serial 7-Segment Display" option to the boards menu within Arduino. If you reprogram the Display, you'll need this board selected. Special pin defines were required to make use of new pins 22 and 23 (PB6:7) (in variants/standard/pins_arduino.h). These pins are available on the Serial 7-Segment Display because it runs on the ATmega328's internal 8MHz oscillator.
-Digging further into this folder, you'll find the bootloader source code.
+The control is housed in a small project box.  It consists of an arduino Nano on a custom board and connected to:
 
-This project is Open-source!
+Two tact switches on D11 and D12 for up/down control of the temperature set point.
 
-License: Creative Commons Attribution-ShareAlike 3.0 (CC BY-SA 3.0)
-http://creativecommons.org/licenses/by-sa/3.0/
+A Sparkfun 7-segment serial lcd display (https://www.sparkfun.com/products/11440)  The display shows a:nnn for the actual temperature and p:nnn for the setpoint.
+
+A 10k thermister for measuring temperature of the heater block.
+
+A Sparkfun beefcake relay control kit. (https://www.sparkfun.com/products/11042)
+
+#########################
+Status:  
+#########################
+It works but the interface isn't very responsive.
+
+#########################
+TODO:  
+#########################
+
+Improve the loop that detects button pushes.  
+Allow push/hold for inputing the temperature.
+
+Improve the loop that controls temperature.  PID?

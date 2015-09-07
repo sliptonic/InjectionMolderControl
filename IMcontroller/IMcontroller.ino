@@ -28,6 +28,9 @@ const byte s7sAddress = 0x71;
 #define BCOEFFICIENT 3950
 // the value of the 'other' resistor
 #define SERIESRESISTOR 10000    
+
+//which pin to connect relay control to
+# define RELAYPIN 10
  
 int samples[NUMSAMPLES];
 
@@ -45,7 +48,7 @@ byte pressed[NUMBUTTONS], justpressed[NUMBUTTONS], justreleased[NUMBUTTONS];
 char tempString[5];
 
 
-unsigned int setpoint = 300;
+unsigned int setpoint = 175;
 unsigned int actual_temp = 0;
 
 
@@ -69,6 +72,7 @@ void setup()
     //digitalWrite(buttons[i], LOW);
   }
 
+  pinMode(RELAYPIN, OUTPUT);
 
   Wire.begin();  // Initialize hardware I2C pins
 
@@ -111,8 +115,17 @@ void loop()
   sprintf(tempString, "A%03d", actual_temp);
   s7sSendStringI2C(tempString);
 
-
+  if (actual_temp >= (setpoint +5)) {
+    //turn off the relay
+    digitalWrite(RELAYPIN, LOW); 
+  }
+  else if (actual_temp <= (setpoint - 5)) {
+    //turn on the relay
+    digitalWrite(RELAYPIN, HIGH); 
+  }
   delay(100);  // This will make the display update at 10Hz.*/
+  
+  
 }
 
 // This custom function works somewhat like a serial.print.
